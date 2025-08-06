@@ -1,0 +1,39 @@
+# Dependencies
+/node_modules
+
+# Environment Variables
+# Never commit this file! It contains sensitive keys and secrets.
+.env
+
+# Production
+# If you have a build folder for your compiled code
+/build
+/dist
+
+# Logs
+# Log files can contain sensitive information and grow very large
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS-generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE / Editor specific files
+.idea
+.vscode/
+*.swp
+*.swo
+
+# Optional Test Coverage
+/coverage
