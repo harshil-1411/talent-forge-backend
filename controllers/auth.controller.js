@@ -44,8 +44,11 @@ export const login = async (req, res, next) => {
     res
       .cookie("accessToken", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        secure: true, // Always use secure in production
+        sameSite: "none", // Required for cross-site cookies
+        domain: ".onrender.com", // Your backend domain
+        path: "/",
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
       })
       .status(200)
       .json({
@@ -67,6 +70,8 @@ export const logout = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
+      domain: ".onrender.com",
+      path: "/"
     })
     .status(200)
     .json({ message: "User logged out successfully" });
