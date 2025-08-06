@@ -2,7 +2,6 @@ import { Router } from "express";
 import { verifyToken } from "../middlewares/jwt.js";
 import {
   createReview,
-    // deleteReview,
     getReviews,
 } from "../controllers/review.controller.js";
 

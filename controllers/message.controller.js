@@ -1,5 +1,5 @@
-import {Message} from "../models/message.model.js";
-import {Conversation} from "../models/conversation.model.js";
+import {Message} from "../models/Message.model.js";
+import {Conversation} from "../models/Conversation.model.js";
 import createError from "../utils/createError.js";
 
 

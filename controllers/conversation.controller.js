@@ -1,4 +1,4 @@
-import { Conversation } from "../models/conversation.model.js";
+import { Conversation } from "../models/Conversation.model.js";
 
 export const createConversation = async (req, res, next) => {
   try {
@@ -29,17 +29,23 @@ export const createConversation = async (req, res, next) => {
 
 export const updateConversation = async (req, res, next) => {
   try {
-    const updatedConversation = await Conversation.findOneAndUpdate(
-      { id: req.params.id }, // Note: Using 'id' field from your schema
+    const updatedConversation = await Conversation.findByIdAndUpdate(
+      req.params.id,
       {
         $set: req.isSeller 
           ? { readBySeller: true } 
-          : { readByBuyer: true },
+          : { readByBuyer: true }
       },
       { new: true }
     );
-    res.status(200).send(updatedConversation);
+
+    if (!updatedConversation) {
+      return next(createError(404, "Conversation not found"));
+    }
+
+    res.status(200).json(updatedConversation);
   } catch (err) {
+    console.error("Error updating conversation:", err);
     next(err);
   }
 };
@@ -66,15 +72,17 @@ export const getSingleConversation = async (req, res, next) => {
 
 export const getConversations = async (req, res, next) => {
   try {
+    console.log("Getting conversations for user:", req.userId, "isSeller:", req.isSeller);
+    
     const conversations = await Conversation.find(
       req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }
-    )
-    .sort({ updatedAt: -1 })
-    .populate("sellerId", "username img") // Fetches username and img for the seller
-    .populate("buyerId", "username img");  // Fetches username and img for the buyer
-
+    ).sort({ updatedAt: -1 });
+    
+    console.log("Found conversations:", conversations.length);
+    
     res.status(200).send(conversations);
   } catch (err) {
+    console.error("Error getting conversations:", err);
     next(err);
   }
 };
