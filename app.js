@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import UserRoute from "./routes/user.route.js";
 import GigRoute from "./routes/gig.route.js";
 import OrderRoute from "./routes/order.route.js";
-import ConveersationRoute from "./routes/conversation.route.js";
+import conversationRoute from "./routes/conversation.route.js";
 import MessageRoute from "./routes/message.route.js";
 import ReviewRoute from "./routes/review.route.js";
 import AuthRoute from "./routes/auth.route.js";
@@ -15,8 +15,17 @@ app.use(
   cors({
     origin: ["https://talent-forge-chi.vercel.app", "http://localhost:5173"],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: [
+      "Content-Type", 
+      "Authorization", 
+      "Origin", 
+      "X-Requested-With",
+      "Accept",
+      "Access-Control-Allow-Origin",
+      "Access-Control-Allow-Credentials"
+    ],
+    exposedHeaders: ["set-cookie"]
   })
 );
 
@@ -29,7 +38,7 @@ app.use("/api/users", UserRoute);
 app.use("/api/auth", AuthRoute);
 app.use("/api/gigs", GigRoute);
 app.use("/api/orders", OrderRoute);
-app.use("/api/conversations", ConveersationRoute);
+app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", MessageRoute);
 app.use("/api/reviews", ReviewRoute);
 
